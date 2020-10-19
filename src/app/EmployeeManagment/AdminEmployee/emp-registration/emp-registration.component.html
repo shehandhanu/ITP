@@ -1,0 +1,324 @@
+<body id="page-top">
+
+  <app-employee></app-employee>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empdashboard">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" routerLink="/empaccount" id="pagesDropdown">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Account</span>
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/empattendance">
+          <i class="fas fa-fw fa-user-check"></i>
+          <span>Attendance</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/emplist">
+          <i class="fas fa-fw fa-user-tie"></i>
+          <span>Employees</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empleaves">
+          <i class="fas fa-fw fa-user-clock"></i>
+          <span>Leaves</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/emprequests">
+          <i class="fas fa-fw fa-sticky-note"></i>
+          <span>Request</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empmesseages">
+          <i class="fas fa-fw fa-comment"></i>
+          <span>Massages</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empreports">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Reports</span></a>
+      </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <h1 class="h1" > Employees Registration Form</h1>
+
+          <div class="card card-register mx-auto mt-1 mb-5">
+            <div class="card-header">Employee Registration</div>
+            <div class="card-body">
+
+                <form #signUpForm = "ngForm" (ngSubmit) = "signUpForm.valid && onSubmit(signUpForm)">
+                <fieldset > <h2 class="alert-primary p-2">Personal Details</h2>
+                  <input type = "hidden" name="_id">
+                  <div class="row">
+                    <div class="col">
+                      <label for="exampleInputEmail1">First Name</label>
+                      <input type="text" class="form-control" placeholder="First name" #firstName = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.firstName" name="firstName"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !firstName.valid }">
+                        <div *ngIf="signUpForm.submitted && !firstName.valid">
+                          <h6 class="h5 text-danger m-0">First Name Can't Be Empty</h6>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputEmail1">Last Name</label>
+                      <input type="text" class="form-control" placeholder="Last name" #lastName = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.lastName" name="lastName"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !lastName.valid }">
+                        <div *ngIf="signUpForm.submitted && !lastName.valid">
+                          <h6 class="h5 text-danger m-0">Last Name Can't Be Empty</h6>
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="form-row">
+                    <div class="col-7">
+                      <label for="exampleInputEmail1">City</label>
+                      <input type="text" class="form-control" placeholder="City" #city = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.city" name="city"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !city.valid }">
+                        <div *ngIf="signUpForm.submitted && !city.valid">
+                          <h6 class="h5 text-danger m-0">City Can't Be Empty</h6>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputEmail1">Area</label>
+                      <input type="text" class="form-control" placeholder="Area" #area = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.area" name="area"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !area.valid }">
+                        <div *ngIf="signUpForm.submitted && !area.valid">
+                          <h6 class="h5 text-danger m-0">Area Can't Be Empty</h6>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputEmail1">Zip Code</label>
+                      <input type="text" class="form-control" placeholder="Zip Code" #zipCode = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.zipCode" name="zipCode"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !zipCode.valid }">
+                        <div *ngIf="signUpForm.submitted && !zipCode.valid">
+                          <h6 class="h5 text-danger m-0">ZIP Code Can't Be Empty</h6>
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" placeholder="Email Address" #empEmail = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.empEmail" name="empEmail"
+                      required [pattern] = "emailRegex" [ngClass] = "{'empty-textbox' : signUpForm.submitted && !empEmail.valid }">
+                        <div *ngIf="signUpForm.submitted && !empEmail.valid">
+                          <h6 *ngIf = "empEmail.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                          <h6 *ngIf = "empEmail.errors.pattern" class="h5 text-danger m-0">Invaild Email Address</h6>
+                        </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" placeholder="Password" #password = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.password" name="password"
+                      minlength = "8" required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !password.valid }">
+                          <div *ngIf="signUpForm.submitted && !password.valid">
+                            <h6 *ngIf = "password.errors.required" class="h5 text-danger m-0">Password Can't Be Empty</h6>
+                            <h6 *ngIf = "password.errors.minlength" class="h5 text-danger m-0">Password Must Have 8 Characters</h6>
+                          </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">NIC Number</label>
+                    <input type="text" class="form-control" placeholder="NIC Number" #nicNumber = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.nicNumber" name="nicNumber"
+                      maxlength = "12" minlength = "10" required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !nicNumber.valid }">
+                            <div *ngIf="signUpForm.submitted && !nicNumber.valid">
+                              <h6 *ngIf = "nicNumber.errors.required" class="h5 text-danger m-0">NIC Number Can't Be Empty</h6>
+                              <h6 *ngIf = "nicNumber.errors.minlength" class="h5 text-danger m-0">NIC Number Must Have 10 Characters</h6>
+                              <h6 *ngIf = "nicNumber.errors.maxlength" class="h5 text-danger m-0">NIC Number Not Exceeding 12 Characters</h6>
+                            </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Employee Photo</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload 'jpg' File Here</small>
+                    </div>
+
+                </fieldset>
+
+                <fieldset > <h2 class="alert-primary p-2">Position Details</h2>
+                  <div class="form-group">
+                    <label for="inputState">Employee Position Title</label>
+                    <select id="inputState" class="form-control"
+                      #empPosition = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.empPosition" name="empPosition"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !empPosition.valid }">
+
+                      <option selected>Choose...</option>
+                      <option value="Docter">Docter</option>
+                      <option value="Nurse">Nurse</option>
+                      <option value="Derector">Director</option>
+                      <option value="Manager">Manager</option>
+                      <option value="Assistant">Assistant</option>
+                    </select>
+
+                      <div *ngIf="signUpForm.submitted && !empPosition.valid">
+                        <h6 *ngIf = "empPosition.errors.required" class="h5 text-danger m-0">Employee Position Title Can't Be Empty</h6>
+                      </div>
+                  </div>
+
+                </fieldset>
+
+                <!-- <fieldset > <h2 class="alert-primary p-2" >Education Details</h2>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Graduation</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Graduation">
+                    <small id="emailHelp" class="form-text text-muted">Type Full Details Here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Graduation Certificate</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload Certificate Here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">GCE Advance Level</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload Certificate Here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">GCE Ordinary Level</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload Certificate Here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Other Certification 1</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload Certificate Here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Other Certification 2</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload Certificate Here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Other Certification 3</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedCustomFile">
+                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Upload Certificate Here</small>
+                  </div>
+                </fieldset> -->
+
+                <fieldset > <h2 class="alert-primary p-2" >Salary & Bank Details</h2>
+                  <div class="row">
+                    <div class="col">
+                      <label for="exampleInputEmail1">Basic Salary</label>
+                      <input type="text" class="form-control" placeholder="Basic Salary" #basicsal = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.basicsal" name="basicsal"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !basicsal.valid }">
+                        <div *ngIf="signUpForm.submitted && !basicsal.valid">
+                          <h6 *ngIf = "basicsal.errors.required" class="h5 text-danger m-0">Basic Salary Can't Be Empty</h6>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputEmail1">Over Time Pay</label>
+                      <input type="text" class="form-control" placeholder="Over Time Pay" #otrate = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.otrate" name="otrate"
+                        required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !otrate.valid }">
+                        <div *ngIf="signUpForm.submitted && !otrate.valid">
+                          <h6 *ngIf = "otrate.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Bank Name</label>
+                    <input type="email" class="form-control" placeholder="Bank Name" #bankName = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.bankName" name="bankName"
+                      required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !bankName.valid }">
+                      <div *ngIf="signUpForm.submitted && !bankName.valid">
+                        <h6 *ngIf = "bankName.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Branch</label>
+                    <input type="text" class="form-control"  placeholder="Branch" #bankBranch = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.bankBranch" name="bankBranch"
+                      required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !bankBranch.valid }">
+                      <div *ngIf="signUpForm.submitted && !bankBranch.valid">
+                        <h6 *ngIf = "bankBranch.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Account Number</label>
+                    <input type="text" class="form-control" placeholder="Account Number" #accNumber = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.accNumber" name="accNumber"
+                      required [ngClass] = "{'empty-textbox' : signUpForm.submitted && !accNumber.valid }">
+                      <div *ngIf="signUpForm.submitted && !accNumber.valid">
+                        <h6 *ngIf = "accNumber.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                      </div>
+                  </div>
+                </fieldset>
+                <input class="btn btn-primary btn-block" type="submit" value = "Submit">
+                <a class="btn btn-secondary btn-block" routerLink="/emplist">Cancel</a>
+              </form>
+              <div class="alert" *ngIf = "serverErrorMessages">
+                {{serverErrorMessages}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Suwasipiriyasa Private Lmt.</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>

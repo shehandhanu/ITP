@@ -1,0 +1,321 @@
+<body id="page-top">
+
+  <app-employee></app-employee>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empdashboard">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" routerLink="/empaccount" id="pagesDropdown">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Account</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empattendance">
+          <i class="fas fa-fw fa-user-check"></i>
+          <span>Attendance</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/emplist">
+          <i class="fas fa-fw fa-user-tie"></i>
+          <span>Employees</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empleaves">
+          <i class="fas fa-fw fa-user-clock"></i>
+          <span>Leaves</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/emprequests">
+          <i class="fas fa-fw fa-sticky-note"></i>
+          <span>Request</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/empmesseages">
+          <i class="fas fa-fw fa-comment"></i>
+          <span>Massages</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empreports">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Reports</span></a>
+      </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <h1 class="h1" > Messeages</h1>
+
+        <ul class="nav nav-tabs md-tabs" id="myTabJust" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+              aria-selected="true">Send Message</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" (click) = "getdata()" aria-controls="profile-just"
+              aria-selected="false">Recive Messeages</a>
+          </li>
+        </ul>
+        <div class="tab-content card pt-1 pl-1 pr-1" id="myTabContentJust">
+          <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
+
+              <div id="accordion">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <input type="radio" name="optradio" checked class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Send To One Employee
+                      <!-- <label for="" class="h5 ml-3"></label> -->
+                    <!-- </input> -->
+                    </h5>
+                  </div>
+
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+
+                      <form #oneSendMsgForm = "ngForm" (ngSubmit) = "onOneSubmit(oneSendMsgForm)">
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                            <label for="inputEmail4">Employee Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Employee Email"
+                            #empEmail = "ngModel" [(ngModel)] = "messageService.selectedMessages.empEmail" name="empEmail">
+                          </div>
+                          <div class="form-group col-md-9">
+                            <label for="inputPassword4">Senders Name</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Sender's Name"
+                            #empName = "ngModel" [(ngModel)] = "messageService.selectedMessages.empName" name="empName">
+                          </div>
+                        </div>
+
+                        <hr class="bg-primary">
+
+                          <div class="form-group">
+                            <label for="inputAddress">Subject</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="Subject"
+                            #subject = "ngModel" [(ngModel)] = "messageService.selectedMessages.subject" name="subject">
+                          </div>
+
+                          <div class="form-group">
+                            <label for="inputAddress">Messeage</label>
+                            <textarea rows="3" class="form-control" placeholder="Type Massage Here"
+                            #messeage = "ngModel" [(ngModel)] = "messageService.selectedMessages.message" name="messeage"></textarea>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-10 float-left">
+
+                            </div>
+                            <div class="col-2 float-right">
+                              <button type="submit" class="btn btn-primary btn-block">Send</button>
+                            </div>
+                          </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <input type="radio" name="optradio" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Send By Category
+                      <!-- </button> -->
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+
+                      <form #CSendMsgForm = "ngForm" (ngSubmit) = "CPMsgSend(CSendMsgForm)">
+                        <div class="form-group col-md-4">
+                          <label for="inputState">Send By Employee Type</label>
+                          <select id="inputState" class="form-control"
+                          #msgType = "ngModel" [(ngModel)] = "messageService.selectedMessages.msgType" name="msgType">
+                            <option selected>Choose...</option>
+                            <option>Docter</option>
+                            <option>Nurse</option>
+                            <option>Director</option>
+                            <option>Manager</option>
+                            <option>Assistant</option>
+                          </select>
+                        </div>
+
+                        <hr class="bg-primary">
+
+                        <div class="form-group">
+                          <label for="inputAddress">Subject</label>
+                          <input type="text" class="form-control" id="inputAddress" placeholder="Subject"
+                          #subject = "ngModel" [(ngModel)] = "messageService.selectedMessages.subject" name="subject">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputAddress">Messeage</label>
+                          <textarea rows="3" class="form-control" placeholder="Type Massage Here"
+                          #messeage = "ngModel" [(ngModel)] = "messageService.selectedMessages.message" name="messeage"></textarea>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-10 float-left">
+
+                          </div>
+                          <div class="col-2 float-right">
+                            <button type="submit" class="btn btn-primary btn-block">Send</button>
+                          </div>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <input type="radio" name="optradio" class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Send All Employee
+                      <!-- </button> -->
+                    </h5>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <div class="form-check">
+                          <!-- <input type="radio" name="optradio" class="mr-3"> -->
+                          <label class="form-check-label" for="gridCheck">
+                            This Messeage will Send to all of employees
+                          </label>
+                        </div>
+                      </div>
+                      <hr class="bg-primary">
+
+                      <form #ASendMsgForm = "ngForm" (ngSubmit) = "APMsgSend(ASendMsgForm)">
+                        <div class="form-group">
+                          <label for="inputAddress">Subject</label>
+                          <input type="text" class="form-control" id="inputAddress" placeholder="Subject"
+                          #subject = "ngModel" [(ngModel)] = "messageService.selectedMessages.subject" name="subject">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputAddress">Messeage</label>
+                          <textarea rows="3" class="form-control" placeholder="Type Massage Here"
+                          #messeage = "ngModel" [(ngModel)] = "messageService.selectedMessages.message" name="messeage"></textarea>
+                        </div>
+
+                          <div class="row">
+                            <div class="col-10 float-left">
+
+                            </div>
+                            <div class="col-2 float-right">
+                              <button type="submit" class="btn btn-primary btn-block">Send</button>
+                            </div>
+                          </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+
+            <div *ngFor="let column of dataSource">
+              <div class="card mb-2" >
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-3">
+                      Employee Name :- {{column.empName}}
+                    </div>
+                    <div class="col-1">
+                        <div *ngIf="getstates(column.msgCheak) == 1">
+                          <span class="badge badge-success">  Readed  </span>
+                        </div>
+                        <div *ngIf="getstates(column.msgCheak) == 0">
+                          <span class="badge badge-warning">Not Readed</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-9">
+                      <h5 class="card-title">Employee Email :-  {{column.empEmail}}</h5>
+                      <h4 class="card-title">Subject :-  {{column.subject}}</h4>
+                      <p class="card-text">Messeage Content <br>
+                        <label for="">{{column.message}}</label>
+                      </p>
+                    </div>
+                    <div class="col-3">
+                      <div class="col-10">
+                        <div *ngIf="getstates(column.msgCheak) == 0">
+                          <a class="btn btn-primary btn-block mb-2" role="button" (click) = "markasread(column._id , column.msgCheak)" >Mark As Read <i class="far fa-envelope-open float-right m-1 mr-3"></i></a>
+                        </div>
+                        <div *ngIf="getstates(column.msgCheak) == 1">
+                          <a class="btn btn-secondary btn-block mb-2" role="button" (click) = "markasunread(column._id , column.msgCheak)" >Mark As Un Read <i class="far fa-envelope float-right m-1 mr-3"></i></a>
+                        </div>
+
+                      <br>
+                      <a class="btn btn-danger btn-block" role="button" role="button" (click) = "deletemsg(column._id)" >Delete Messeage <i class="fas fa-trash  float-right m-1 mr-3"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer text-muted">
+                  <h5 class="card-title mb-1">Sender Email :-  {{column.senderemail}}</h5>
+                 <h5 class="mb-0"> Recive Date {{column.date}}</h5>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <br>
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Suwasipiriyasa Private Lmt.</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>

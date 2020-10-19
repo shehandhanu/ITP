@@ -1,0 +1,188 @@
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+
+    <h1 class="h1" > Employee Data Update Form </h1>
+
+    <div class="card card-register mx-auto mt-1 mb-5">
+      <div class="card-header">Employee Data Update</div>
+      <div class="card-body">
+
+          <form #updatepForm = "ngForm" (ngSubmit) = "updatepForm.valid && onSubmit(updatepForm)">
+          <fieldset > <h2 class="alert-primary p-2">Personal Details</h2>
+            <input name="_id" value="{{editEmployee._id}}" #_id = "ngModel" [(ngModel)] = "employeeService.selectedEmployee._id">
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1">First Name</label>
+                <input type="text" class="form-control" value="{{editEmployee.firstName}}" placeholder="First name" #firstName = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.firstName" name="firstName"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !firstName.valid }">
+                  <div *ngIf="updatepForm.submitted && !firstName.valid">
+                    <h6 class="h5 text-danger m-0">First Name Can't Be Empty</h6>
+                  </div>
+              </div>
+              <div class="col">
+                <label for="exampleInputEmail1">Last Name</label>
+                <input type="text" class="form-control" value="{{editEmployee.lastName}}" placeholder="Last name" #lastName = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.lastName" name="lastName"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !lastName.valid }">
+                  <div *ngIf="updatepForm.submitted && !lastName.valid">
+                    <h6 class="h5 text-danger m-0">Last Name Can't Be Empty</h6>
+                  </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-row">
+              <div class="col-7">
+                <label for="exampleInputEmail1">City</label>
+                <input type="text" class="form-control" value="{{editEmployee.city}}" placeholder="City" #city = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.city" name="city"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !city.valid }">
+                  <div *ngIf="updatepForm.submitted && !city.valid">
+                    <h6 class="h5 text-danger m-0">City Can't Be Empty</h6>
+                  </div>
+              </div>
+              <div class="col">
+                <label for="exampleInputEmail1">Area</label>
+                <input type="text" class="form-control" value="{{editEmployee.area}}" placeholder="Area" #area = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.area" name="area"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !area.valid }">
+                  <div *ngIf="updatepForm.submitted && !area.valid">
+                    <h6 class="h5 text-danger m-0">Area Can't Be Empty</h6>
+                  </div>
+              </div>
+              <div class="col">
+                <label for="exampleInputEmail1">Zip Code</label>
+                <input type="text" class="form-control" value="{{editEmployee.zipCode}}" placeholder="Zip Code" #zipCode = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.zipCode" name="zipCode"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !zipCode.valid }">
+                  <div *ngIf="updatepForm.submitted && !zipCode.valid">
+                    <h6 class="h5 text-danger m-0">ZIP Code Can't Be Empty</h6>
+                  </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" value="{{editEmployee.empEmail}}" placeholder="Email Address" #empEmail = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.empEmail" name="empEmail"
+                required [pattern] = "emailRegex" [ngClass] = "{'empty-textbox' : updatepForm.submitted && !empEmail.valid }">
+                  <div *ngIf="updatepForm.submitted && !empEmail.valid">
+                    <h6 *ngIf = "editEmployee.empEmail.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                    <h6 *ngIf = "editEmployee.empEmail.errors.pattern" class="h5 text-danger m-0">Invaild Email Address</h6>
+                  </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" value="{{editEmployee.password}}" placeholder="Password" #password = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.password" name="password"
+                minlength = "8" required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !password.valid }">
+                    <div *ngIf="updatepForm.submitted && !password.valid">
+                      <h6 *ngIf = "editEmployee.password.errors.required" class="h5 text-danger m-0">Password Can't Be Empty</h6>
+                      <h6 *ngIf = "editEmployee.password.errors.minlength" class="h5 text-danger m-0">Password Must Have 8 Characters</h6>
+                    </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">NIC Number</label>
+              <input type="text" class="form-control" value="{{editEmployee.nicNumber}}" placeholder="NIC Number" #nicNumber = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.nicNumber" name="nicNumber"
+                maxlength = "12" minlength = "10" required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !nicNumber.valid }">
+                      <div *ngIf="updatepForm.submitted && !nicNumber.valid">
+                        <h6 *ngIf = "editEmployee.nicNumber.errors.required" class="h5 text-danger m-0">NIC Number Can't Be Empty</h6>
+                        <h6 *ngIf = "editEmployee.nicNumber.errors.minlength" class="h5 text-danger m-0">NIC Number Must Have 10 Characters</h6>
+                        <h6 *ngIf = "editEmployee.nicNumber.errors.maxlength" class="h5 text-danger m-0">NIC Number Not Exceeding 12 Characters</h6>
+                      </div>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Employee Photo</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="validatedCustomFile">
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+              </div>
+              <small id="emailHelp" class="form-text text-muted">Upload 'jpg' File Here</small>
+              </div>
+
+          </fieldset>
+
+          <fieldset > <h2 class="alert-primary p-2">Position Details</h2>
+            <div class="form-group">
+              <label for="inputState">Employee Position Title</label>
+              <select id="inputState" class="form-control"
+                #empPosition = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.empPosition" name="empPosition"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !empPosition.valid }">
+
+                <option value="{{editEmployee.empPosition}}" selected>{{editEmployee.empPosition}}</option>
+                <option value="Docter">Docter</option>
+                <option value="Nurse">Nurse</option>
+                <option value="Derector">Director</option>
+                <option value="Manager">Manager</option>
+                <option value="Assistant">Assistant</option>
+              </select>
+
+                <div *ngIf="updatepForm.submitted && !empPosition.valid">
+                  <h6 *ngIf = "empPosition.errors.required" class="h5 text-danger m-0">Employee Position Title Can't Be Empty</h6>
+                </div>
+            </div>
+
+          </fieldset>
+
+          <fieldset > <h2 class="alert-primary p-2" >Salary & Bank Details</h2>
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1">Basic Salary</label>
+                <input type="text" class="form-control" value="{{editEmployee.basicsal}}" placeholder="Basic Salary" #basicsal = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.basicsal" name="basicsal"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !basicsal.valid }">
+                  <div *ngIf="updatepForm.submitted && !basicsal.valid">
+                    <h6 *ngIf = "basicsal.errors.required" class="h5 text-danger m-0">Basic Salary Can't Be Empty</h6>
+                  </div>
+              </div>
+              <div class="col">
+                <label for="exampleInputEmail1">Over Time Pay</label>
+                <input type="text" class="form-control" value="{{editEmployee.otrate}}" placeholder="Over Time Pay" #otrate = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.otrate" name="otrate"
+                  required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !otrate.valid }">
+                  <div *ngIf="updatepForm.submitted && !otrate.valid">
+                    <h6 *ngIf = "otrate.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                  </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Bank Name</label>
+              <input type="email" class="form-control" value="{{editEmployee.bankName}}" placeholder="Bank Name" #bankName = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.bankName" name="bankName"
+                required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !bankName.valid }">
+                <div *ngIf="updatepForm.submitted && !bankName.valid">
+                  <h6 *ngIf = "bankName.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Branch</label>
+              <input type="text" class="form-control" value="{{editEmployee.bankBranch}}" placeholder="Branch" #bankBranch = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.bankBranch" name="bankBranch"
+                required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !bankBranch.valid }">
+                <div *ngIf="updatepForm.submitted && !bankBranch.valid">
+                  <h6 *ngIf = "bankBranch.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Account Number</label>
+              <input type="text" class="form-control" value="{{editEmployee.accNumber}}" placeholder="Account Number" #accNumber = "ngModel" [(ngModel)] = "employeeService.selectedEmployee.accNumber" name="accNumber"
+                required [ngClass] = "{'empty-textbox' : updatepForm.submitted && !accNumber.valid }">
+                <div *ngIf="updatepForm.submitted && !accNumber.valid">
+                  <h6 *ngIf = "accNumber.errors.required" class="h5 text-danger m-0">Email Address Can't Be Empty</h6>
+                </div>
+            </div>
+          </fieldset>
+          <input class="btn btn-primary btn-block" type="submit" value = "Update">
+          <a class="btn btn-secondary btn-block" routerLink="/emplist">Cancel</a>
+        </form>
+        <div class="alert" *ngIf = "serverErrorMessages">
+          {{serverErrorMessages}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Sticky Footer -->
+<footer class="sticky-footer">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Suwasipiriyasa Private Lmt.</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+<!-- /.content-wrapper -->
